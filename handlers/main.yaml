@@ -8,3 +8,16 @@
   when: >
     supervisor_service_started is not defined or
     not supervisor_service_started.changed
+
+- name: Reload Supervisor service
+  service:
+    name: "{{ supervisor_service }}"
+    state: reloaded
+  when: >
+    (
+      supervisor_service_started is not defined or
+      not supervisor_service_started.changed
+    ) and (
+      supervisor_service_restarted is not defined or
+      not supervisor_service_restarted.changed
+    )
